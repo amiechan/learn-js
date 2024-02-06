@@ -21,11 +21,30 @@ function createTxtNode(txt) {
   return txtNode;
 }
 
+function createButtonNode(text, e, l) {
+  let buttonNode = document.createElement("button");
+  let buttonText = createTxtNode(text);
+  buttonNode.appendChild(buttonText);
+  buttonNode.addEventListener(e, l);
+  return buttonNode;
+}
+
+function edit(node) {
+  let inputNode = document.createElement("input");
+  inputNode.placeholder = "Enter Cell (x,y) ...";
+  inputNode.type = 'text';
+  node.replaceChild(inputNode, node.childNodes[0]);
+}
+
+
 function addTable() {
   const tableNode = document.createElement("table");
   for(let i = 0; i < 3; i++) {
     let col1 = createTDNode(createTxtNode("Cell (" + i + ", 0)"));
-    tableNode.appendChild(createTRNode([col1]));
+    let col2 = createButtonNode("Edit text", "click", function () {
+      edit(col1);
+    });
+    tableNode.appendChild(createTRNode([col1, col2]));
   }
   document.getElementById("root").appendChild(tableNode);
 }
